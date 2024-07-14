@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcpa26030volv"]
+[gd_scene load_steps=19 format=3 uid="uid://bcpa26030volv"]
 
 [ext_resource type="PackedScene" uid="uid://cfv1jyk62x2ec" path="res://Models/boat1.1.blend" id="1_72u4r"]
 [ext_resource type="PackedScene" uid="uid://dye3bnovg0n7q" path="res://Scenes/player.tscn" id="1_eish4"]
@@ -29,6 +29,8 @@ noise = SubResource("FastNoiseLite_3enjm")
 width = 1002
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5ji6"]
+transparency = 1
+blend_mode = 1
 albedo_texture = SubResource("NoiseTexture2D_ksg4g")
 roughness = 0.04
 normal_texture = SubResource("NoiseTexture2D_t44uo")
@@ -38,8 +40,17 @@ heightmap_max_layers = 32
 heightmap_texture = SubResource("NoiseTexture2D_olrdk")
 backlight = Color(1, 1, 1, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_p4ctg"]
-size = Vector3(29.9348, 0.0805664, 10.8628)
+[sub_resource type="BoxShape3D" id="BoxShape3D_6l03y"]
+size = Vector3(30.6212, 0.83527, 10.8394)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dab8f"]
+size = Vector3(25.085, 0.675415, 0.272949)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_708vp"]
+size = Vector3(0.32373, 0.772644, 11.0049)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_grfwh"]
+size = Vector3(0.323975, 0.877441, 7.50055)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_op0rq"]
 sky_top_color = Color(0.208063, 0.469664, 0.675292, 1)
@@ -74,14 +85,36 @@ surface_material_override/0 = SubResource("StandardMaterial3D_f5ji6")
 [node name="Boat" type="Node3D" parent="."]
 
 [node name="RigidBody3D" type="RigidBody3D" parent="Boat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10705, 0, -0.590291)
-freeze = true
+mass = 1000.0
+gravity_scale = 0.0
+continuous_cd = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Boat/RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57704, 1.95343, -0.177002)
-shape = SubResource("BoxShape3D_p4ctg")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00185, 1.59846, -0.754883)
+shape = SubResource("BoxShape3D_6l03y")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Boat/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13628, 2.34854, 4.69948)
+shape = SubResource("BoxShape3D_dab8f")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Boat/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13628, 2.34854, -6.16718)
+shape = SubResource("BoxShape3D_dab8f")
 
 [node name="Model" parent="Boat/RigidBody3D" instance=ExtResource("1_72u4r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10705, 0, -0.590291)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Boat/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3271, 2.34365, -0.721191)
+shape = SubResource("BoxShape3D_708vp")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Boat/RigidBody3D"]
+transform = Transform3D(0.734515, -0.055146, -0.676348, -0.0237274, 0.993996, -0.106813, 0.678178, 0.0945039, 0.728796, 16.2343, 2.65782, 2.07927)
+shape = SubResource("BoxShape3D_grfwh")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Boat/RigidBody3D"]
+transform = Transform3D(-0.709903, -0.0919806, -0.698267, -0.0237274, 0.993996, -0.106813, 0.703899, -0.059259, -0.707823, 16.2343, 2.65782, -3.54169)
+shape = SubResource("BoxShape3D_grfwh")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_17lr0")
@@ -93,3 +126,7 @@ shadow_bias = 0.02
 
 [node name="Player" parent="." instance=ExtResource("1_eish4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.65281, 4.68999, -0.466313)
+linear_damp = 1.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.822055, -0.193488, 0.535527, 0, 0.940496, 0.339805, -0.569409, -0.279338, 0.773139, 13.7726, 6.55061, 8.30855)

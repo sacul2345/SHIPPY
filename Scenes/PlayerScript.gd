@@ -4,6 +4,7 @@ extends RigidBody3D
 @export var groundCast : RayCast3D
 
 const SENS_MULTI = .005
+const MOVE_MULTI = 50
 
 var inputDirection : Vector2
 var moveVector : Vector3
@@ -21,8 +22,8 @@ func _physics_process(delta):
 	inputDirection = Input.get_vector("foward","backward","strafeLeft","strafeRight")
 	moveVector = (camera.transform.basis * Vector3(inputDirection.y,0,inputDirection.x)).normalized()
 	
-	if isOnGround():
-		apply_impulse(Vector3(moveVector.x,0,moveVector.z)) 
+	if isOnGround() and linear_velocity.length() < 10:
+		apply_impulse(Vector3(moveVector.x,0,moveVector.z) * delta * MOVE_MULTI) 
 
 func isOnGround():
 	if groundCast.is_colliding():
