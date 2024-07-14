@@ -1,0 +1,95 @@
+[gd_scene load_steps=16 format=3 uid="uid://bcpa26030volv"]
+
+[ext_resource type="PackedScene" uid="uid://cfv1jyk62x2ec" path="res://Models/boat1.1.blend" id="1_72u4r"]
+[ext_resource type="PackedScene" uid="uid://dye3bnovg0n7q" path="res://Scenes/player.tscn" id="1_eish4"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nq02x"]
+
+[sub_resource type="Gradient" id="Gradient_10d02"]
+offsets = PackedFloat32Array(0, 0.877049, 1)
+colors = PackedColorArray(0.128843, 0.196234, 0.215911, 1, 0.206229, 0.298588, 0.325786, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l0675"]
+noise_type = 2
+frequency = 0.0618
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ksg4g"]
+color_ramp = SubResource("Gradient_10d02")
+noise = SubResource("FastNoiseLite_l0675")
+
+[sub_resource type="Gradient" id="Gradient_18v8i"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3enjm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_olrdk"]
+color_ramp = SubResource("Gradient_18v8i")
+noise = SubResource("FastNoiseLite_3enjm")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t44uo"]
+width = 1002
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5ji6"]
+albedo_texture = SubResource("NoiseTexture2D_ksg4g")
+roughness = 0.04
+normal_texture = SubResource("NoiseTexture2D_t44uo")
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_texture = SubResource("NoiseTexture2D_olrdk")
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p4ctg"]
+size = Vector3(29.9348, 0.0805664, 10.8628)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_op0rq"]
+sky_top_color = Color(0.208063, 0.469664, 0.675292, 1)
+sky_horizon_color = Color(0.58241, 0.670284, 0.724539, 1)
+sky_curve = 0.106066
+sky_energy_multiplier = 1.33
+ground_bottom_color = Color(0.230642, 0.306304, 0.473632, 1)
+ground_horizon_color = Color(0.568627, 0.686275, 0.780392, 1)
+
+[sub_resource type="Sky" id="Sky_s2hv5"]
+sky_material = SubResource("ProceduralSkyMaterial_op0rq")
+process_mode = 1
+radiance_size = 2
+
+[sub_resource type="Environment" id="Environment_17lr0"]
+background_mode = 2
+sky = SubResource("Sky_s2hv5")
+ambient_light_color = Color(0.821789, 0.821789, 0.821789, 1)
+tonemap_mode = 1
+ssr_enabled = true
+ssao_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(0.354943, 0.648104, 0.837999, 1)
+
+[node name="World" type="Node3D"]
+
+[node name="water" type="MeshInstance3D" parent="."]
+transform = Transform3D(191.685, 0, 0, 0, 191.685, 0, 0, 0, 191.685, 0.0615883, -0.0971365, -0.0115089)
+mesh = SubResource("PlaneMesh_nq02x")
+surface_material_override/0 = SubResource("StandardMaterial3D_f5ji6")
+
+[node name="Boat" type="Node3D" parent="."]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Boat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10705, 0, -0.590291)
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boat/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57704, 1.95343, -0.177002)
+shape = SubResource("BoxShape3D_p4ctg")
+
+[node name="Model" parent="Boat/RigidBody3D" instance=ExtResource("1_72u4r")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_17lr0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.457145, 0.889392, 1.3624e-08, -0.449848, 0.23122, 0.862655, 0.767239, -0.394358, 0.505793, 0, 9.10528, 0)
+shadow_enabled = true
+shadow_bias = 0.02
+
+[node name="Player" parent="." instance=ExtResource("1_eish4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.65281, 4.68999, -0.466313)
