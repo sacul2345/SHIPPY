@@ -25,4 +25,4 @@ mesh = SubResource("CapsuleMesh_k7v63")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00626326, 0.513346, 0.00166082)
 
 [node name="GroundCheck" type="RayCast3D" parent="."]
-target_position = Vector3(0, -1.035, 0)
+target_position = Vector3(2.08165e-12, -1.2, 2.08165e-12)

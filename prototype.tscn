@@ -126,7 +126,6 @@ shadow_bias = 0.02
 
 [node name="Player" parent="." instance=ExtResource("1_eish4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.65281, 3.11713, -0.466313)
-linear_damp = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.822055, -0.193488, 0.535527, 0, 0.940496, 0.339805, -0.569409, -0.279338, 0.773139, 13.7726, 6.55061, 8.30855)
