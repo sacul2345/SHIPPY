@@ -88,6 +88,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_f5ji6")
 mass = 1000.0
 gravity_scale = 0.0
 continuous_cd = true
+constant_force = Vector3(2.08165e-12, 2.08165e-12, 100)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Boat/RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00185, 1.59846, -0.754883)
